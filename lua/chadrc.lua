@@ -2,12 +2,14 @@
 local M = {}
 
 M.ui = {
-	theme = "onedark",
+  theme = "onedark",
 
-	-- hl_override = {
-	-- 	Comment = { italic = true },
-	-- 	["@comment"] = { italic = true },
-	-- },
+  hl_override = {
+    Comment = { italic = true },
+    ["@comment"] = { italic = true },
+    StatusLine = { bg = "NONE" },
+  },
+
   theme_toggle = { "onedark", "one_light" },
   transparency = false,
   statusline = {
