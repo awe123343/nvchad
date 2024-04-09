@@ -47,7 +47,7 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    event = "BufWinEnter",
+    event = { "BufRead", "BufNewFile", "InsertEnter" },
     config = function()
       require "configs.user.lualine"
     end,
