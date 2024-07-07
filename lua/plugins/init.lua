@@ -1,13 +1,41 @@
 return {
   {
-    "stevearc/conform.nvim",
-    -- event = 'BufWritePre' -- uncomment for format on save
-    enabled = false,
+    "pojokcodeid/auto-conform.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "stevearc/conform.nvim",
+    },
+    event = "VeryLazy",
     config = function()
-      require "configs.conform"
+      require("auto-conform").setup {
+        ensure_installed = {
+          "stylua",
+        },
+      }
+      -- other conform config
+      require("conform").setup {
+        format_on_save = {
+          lsp_fallback = true,
+          timeout_ms = 5000,
+        },
+      }
     end,
   },
-
+  {
+    "pojokcodeid/auto-lint.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "mfussenegger/nvim-lint",
+    },
+    event = "VeryLazy",
+    config = function()
+      require("auto-lint").setup {
+        ensure_installed = {
+          --"eslint_d",
+        },
+      }
+    end,
+  },
   {
     "williamboman/mason-lspconfig.nvim",
     event = "VeryLazy",
@@ -53,46 +81,6 @@ return {
     event = { "BufRead", "BufNewFile", "InsertEnter" },
     config = function()
       require "configs.user.lualine"
-    end,
-  },
-  {
-    "jayp0521/mason-null-ls.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "nvimtools/none-ls.nvim",
-      dependencies = {
-        "nvimtools/none-ls-extras.nvim",
-        lazy = true,
-      },
-    },
-    opts = function()
-      local null_ls = require "null-ls"
-      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-      require("mason-null-ls").setup {
-        ensure_installed = {
-          "stylua",
-        },
-      }
-
-      null_ls.setup {
-        debug = false,
-        sources = {
-          null_ls.builtins.formatting.stylua,
-          -- null_ls.builtins.diagnostics.eslint_d
-        },
-        on_attach = function(client, bufnr)
-          if client.supports_method "textDocument/formatting" then
-            vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
-            vim.api.nvim_create_autocmd("BufWritePre", {
-              group = augroup,
-              buffer = bufnr,
-              callback = function()
-                vim.lsp.buf.format { bufnr = bufnr }
-              end,
-            })
-          end
-        end,
-      }
     end,
   },
   {

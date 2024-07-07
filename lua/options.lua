@@ -12,7 +12,7 @@ autocmd("VimResized", {
   command = "tabdo wincmd =",
 })
 
-autocmd("VimEnter", {
+autocmd("VimEnter",                      {
   pattern = "*",
   callback = function()
     vim.opt.statusline = "%#normal# "
