@@ -118,4 +118,25 @@ return {
       require "configs.user.toggleterm"
     end,
   },
+  {
+    "numToStr/Comment.nvim",
+    dependencies = {
+      "JoosepAlviste/nvim-ts-context-commentstring",
+      lazy = true,
+      config = function()
+        require("ts_context_commentstring").setup {
+          enable_autocmd = false,
+        }
+      end,
+    },
+    lazy = true,
+    opts = function()
+      return {
+        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+      }
+    end,
+    config = function(_, opts)
+      require("Comment").setup(opts)
+    end,
+  },
 }
