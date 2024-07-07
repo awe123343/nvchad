@@ -12,7 +12,7 @@ autocmd("VimResized", {
   command = "tabdo wincmd =",
 })
 
-autocmd("VimEnter",                      {
+autocmd("VimEnter", {
   pattern = "*",
   callback = function()
     vim.opt.statusline = "%#normal# "
@@ -22,8 +22,6 @@ autocmd("VimEnter",                      {
 local opt = vim.opt
 opt.cmdheight = 0
 
-
 local lpath = vim.fn.stdpath "config" .. "/snippets"
 vim.g.vscode_snippets_path = lpath
 vim.g.snipmate_snippets_path = lpath
-
