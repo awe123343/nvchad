@@ -9,25 +9,28 @@ return {
   },
 
   {
-    "neovim/nvim-lspconfig",
-    config = function()
+    "williamboman/mason-lspconfig.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "williamboman/mason.nvim",
+    },
+    opts = {
+      ensure_installed = {
+        "lua_ls",
+      },
+      automatic_installation = true,
+    },
+    config = function(_, opts)
+      require("mason-lspconfig").setup(opts)
       require("nvchad.configs.lspconfig").defaults()
-      require "configs.lspconfig"
+      require("configs.lspconfig").setup(opts)
     end,
   },
 
   {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "lua-language-server",
-        "stylua",
-        "prettier",
-      },
-    },
-  },
-  {
     "nvim-treesitter/nvim-treesitter",
+    event = "VeryLazy",
     opts = {
       ensure_installed = {
         "vim",
@@ -54,20 +57,42 @@ return {
   },
   {
     "jayp0521/mason-null-ls.nvim",
-    lazy = true,
+    event = "VeryLazy",
     dependencies = {
       "nvimtools/none-ls.nvim",
       dependencies = {
         "nvimtools/none-ls-extras.nvim",
         lazy = true,
       },
-      config = function()
-        require "configs.user.null_ls"
-      end,
     },
-    event = "InsertEnter",
     opts = function()
-      require "configs.user.mason-null-ls"
+      local null_ls = require "null-ls"
+      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+      require("mason-null-ls").setup {
+        ensure_installed = {
+          "stylua",
+        },
+      }
+
+      null_ls.setup {
+        debug = false,
+        sources = {
+          null_ls.builtins.formatting.stylua,
+          -- null_ls.builtins.diagnostics.eslint_d
+        },
+        on_attach = function(client, bufnr)
+          if client.supports_method "textDocument/formatting" then
+            vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              group = augroup,
+              buffer = bufnr,
+              callback = function()
+                vim.lsp.buf.format { bufnr = bufnr }
+              end,
+            })
+          end
+        end,
+      }
     end,
   },
   {
