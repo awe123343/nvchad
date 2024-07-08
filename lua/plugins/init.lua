@@ -37,26 +37,6 @@ return {
     end,
   },
   {
-    "williamboman/mason-lspconfig.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "williamboman/mason.nvim",
-    },
-    opts = {
-      ensure_installed = {
-        "lua_ls",
-      },
-      automatic_installation = true,
-    },
-    config = function(_, opts)
-      require("mason-lspconfig").setup(opts)
-      require("nvchad.configs.lspconfig").defaults()
-      require("configs.lspconfig").setup(opts)
-    end,
-  },
-
-  {
     "nvim-treesitter/nvim-treesitter",
     event = "VeryLazy",
     opts = {
