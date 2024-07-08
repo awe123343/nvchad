@@ -8,6 +8,8 @@ M.ui = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
     StatusLine = { bg = "NONE" },
+    Folded = { bg = "NONE" },
+    FoldColumn = { bg = "NONE" },
   },
 
   theme_toggle = { "onedark", "one_light" },
