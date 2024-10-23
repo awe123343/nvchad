@@ -1,23 +1,9 @@
-# starter
+**This repo is supposed to used as config by NvChad users!**
 
-Starter config for NvChad
+- The main nvchad repo (NvChad/NvChad) is used as a plugin by this repo.
+- So you just import its modules , like `require "nvchad.options" , require "nvchad.mappings"`
+- So you can delete the .git from this repo ( when you clone it locally ) or fork it :)
 
-## HOME
+# Credits
 
-![home!](img/home.png)
-
-## CODE
-
-![code!](img/code.png)
-
-- Linux :
-
-```bash
-git clone https://github.com/pojokcodeid/NvChad-v2-config.git ~/.config/nvim
-```
-
-- Windows
-
-```pwsh
-git clone https://github.com/pojokcodeid/NvChad-v2-config.git "$env:LOCALAPPDATA\nvim"
-```
+1) Lazyvim starter https://github.com/LazyVim/starter as nvchad's starter was inspired by Lazyvim's . It made a lot of things easier!
