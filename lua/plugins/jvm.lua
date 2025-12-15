@@ -1,7 +1,6 @@
 return {
   {
     "nvim-java/nvim-java",
-    branch = "v4.0.0",
     ft = "java", -- load when opening Java files
     config = function()
       require("java").setup {}
@@ -23,10 +22,22 @@ return {
                   path = "/Library/Java/JavaVirtualMachines/zulu-25.jdk/Contents/Home",
                   default = true,
                 },
-                { name = "JavaSE-21", path = "/Library/Java/JavaVirtualMachines/zulu-21.jdk/Contents/Home" },
-                { name = "JavaSE-17", path = "/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home" },
-                { name = "JavaSE-11", path = "/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home" },
-                { name = "JavaSE-1.8", path = "/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home" },
+                {
+                  name = "JavaSE-21",
+                  path = "/Library/Java/JavaVirtualMachines/zulu-21.jdk/Contents/Home",
+                },
+                {
+                  name = "JavaSE-17",
+                  path = "/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home",
+                },
+                {
+                  name = "JavaSE-11",
+                  path = "/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home",
+                },
+                {
+                  name = "JavaSE-1.8",
+                  path = "/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home",
+                },
               },
             },
           },
