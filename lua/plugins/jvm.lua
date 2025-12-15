@@ -11,7 +11,7 @@ return {
       "neovim/nvim-lspconfig",
       "mfussenegger/nvim-dap",
       {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         opts = {
           registries = {
             "github:nvim-java/mason-registry",
@@ -61,16 +61,19 @@ return {
             },
           },
         },
-        -- Use a simpler root directory detection
-        root_dir = require("lspconfig.util").root_pattern(
-          "settings.gradle",
-          "settings.gradle.kts",
-          "pom.xml",
-          "build.gradle",
-          "mvnw",
-          "gradlew",
-          ".git"
-        ),
+        -- Prioritize settings.gradle (only exists at true project root)
+        root_dir = function(fname)
+          return vim.fs.root(fname, {
+            "settings.gradle",
+            "settings.gradle.kts",
+            "gradlew",
+          }) or vim.fs.root(fname, {
+            "build.gradle",
+            "build.gradle.kts",
+            "pom.xml",
+            "build.xml",
+          }) or vim.fs.dirname(fname)
+        end,
       }
     end,
   },

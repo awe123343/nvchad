@@ -47,6 +47,9 @@ return {
     opts.name_maps = opts.name_maps or {}
     opts.add_new = opts.add_new or {}
     opts.ignore = opts.ignore or {}
+    vim.list_extend(opts.ignore, {
+      "spring-boot-tools", -- doesn't exist in Mason registry
+    })
   end,
   config = function(_, opts)
     require("auto-conform").setup(opts)
