@@ -47,3 +47,9 @@ opt.listchars = {
   extends = "›",       -- Character to show when line extends beyond screen
   precedes = "‹",      -- Character to show when line precedes screen
 }
+
+-- Folding options
+opt.foldmethod = "indent"
+opt.foldlevel = 99
+opt.foldcolumn = "0"
+opt.foldenable = true
