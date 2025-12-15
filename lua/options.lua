@@ -35,3 +35,4 @@ vim.api.nvim_create_autocmd("FileType", {
 
 local opt = vim.opt
 opt.cmdheight = 0
+opt.relativenumber = true

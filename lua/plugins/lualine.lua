@@ -5,9 +5,10 @@ return {
     dependencies = { "nvim-lualine/lualine.nvim" },
     config = function()
       require("auto-lualine").setup {
-        setColor = "Eva-Dark",
-        setOption = "roundedall",
-        setMode = 2,
+        -- setColor = "Eva-Dark",
+        setColor = "auto",
+        setOption = "triangle",
+        setMode = 0,
       }
     end,
   },

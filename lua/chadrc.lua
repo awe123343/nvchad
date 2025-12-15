@@ -6,13 +6,13 @@
 local M = {}
 
 M.base46 = {
-  theme = "onedark", -- default theme
+  theme = "everblush", -- default theme
   hl_add = {},
   hl_override = {},
   integrations = {},
   changed_themes = {},
   transparency = false,
-  theme_toggle = { "onedark", "one_light" },
+  theme_toggle = { "everblush", "one_light" },
 }
 
 M.ui = {
