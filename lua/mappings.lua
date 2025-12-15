@@ -66,3 +66,29 @@ end, { desc = "Debug last go test" })
 vim.keymap.set("n", "<leader>dpr", function()
   require("dap-python").test_method()
 end, { desc = "Debug python test method" })
+
+-- Git Signs navigation
+vim.keymap.set("n", "]c", function()
+  if vim.wo.diff then
+    return "]c"
+  end
+  vim.schedule(function()
+    require("gitsigns").next_hunk()
+  end)
+  return "<Ignore>"
+end, { expr = true, desc = "Jump to next hunk" })
+
+vim.keymap.set("n", "[c", function()
+  if vim.wo.diff then
+    return "[c"
+  end
+  vim.schedule(function()
+    require("gitsigns").prev_hunk()
+  end)
+  return "<Ignore>"
+end, { expr = true, desc = "Jump to prev hunk" })
+
+-- Actions
+vim.keymap.set("n", "<leader>ph", function()
+  require("gitsigns").preview_hunk()
+end, { desc = "Preview hunk" })
