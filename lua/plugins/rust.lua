@@ -1,21 +1,38 @@
 return {
   {
-    "rust-lang/rust.vim",
-    ft = "rust",
-    init = function()
-      vim.g.rustfmt_autosave = 1
+    "mrcjkb/rustaceanvim",
+    version = "^5", -- Recommended
+    ft = { "rust" },
+    config = function()
+      local on_attach = require("nvchad.configs.lspconfig").on_attach
+      local capabilities = require("nvchad.configs.lspconfig").capabilities
+
+      vim.g.rustaceanvim = {
+        server = {
+          on_attach = function(client, bufnr)
+            -- Run the default on_attach
+            on_attach(client, bufnr)
+            -- Add keybindings specific to Rustaceanvim
+            vim.keymap.set("n", "<leader>rd", function()
+              vim.cmd.RustLsp "debuggables"
+            end, { desc = "Rust Debuggables", buffer = bufnr })
+          end,
+          capabilities = capabilities,
+        },
+        dap = {
+          -- adapter = require("rustaceanvim.config").get_codelldb_adapter(codelldb_path, liblldb_path),
+        },
+      }
     end,
   },
   {
-    "simrat39/rust-tools.nvim",
-    ft = "rust",
-    dependencies = "neovim/nvim-lspconfig",
-    opts = function()
-      return require "custom.configs.rust-tools"
-    end,
-    config = function(_, opts)
-      require("rust-tools").setup(opts)
-    end,
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "codelldb", -- Debugger
+        "rust-analyzer", -- LSP
+      },
+    },
   },
   {
     "saecki/crates.nvim",
@@ -27,7 +44,6 @@ return {
         sources = { { name = "crates" } },
       }
       crates.show()
-      -- require("core.utils").load_mappings "crates"
     end,
   },
 }

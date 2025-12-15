@@ -18,6 +18,9 @@ return {
     -- Python
     opts.formatters_by_ft["python"] = { "ruff_format" }
 
+    -- Rust
+    opts.formatters_by_ft["rust"] = { "rustfmt" }
+
     -- JavaScript / TypeScript / Web
     local js_formatters = { "prettier" }
     opts.formatters_by_ft["javascript"] = js_formatters
