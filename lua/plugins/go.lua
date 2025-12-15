@@ -24,6 +24,8 @@ return {
     opts = {
       ensure_installed = {
         "delve",
+        "golangci-lint",
+        "golangci-lint-langserver",
       },
     },
   },
@@ -58,6 +60,16 @@ return {
             staticcheck = true,
             gofumpt = true,
           },
+        },
+      }
+
+      lspconfig.golangci_lint_ls.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        filetypes = { "go", "gomod" },
+        root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+        init_options = {
+          command = { "golangci-lint", "run", "--out-format", "json", "--issues-exit-code=1" },
         },
       }
     end,
