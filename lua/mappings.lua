@@ -40,3 +40,23 @@ keymap("n", "<C-/>", "<esc><cmd>lua require('Comment.api').toggle.linewise.curre
 
 -- close windows
 keymap("n", "q", "<cmd>q<cr>", opts)
+
+-- DAP Core
+vim.keymap.set("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>", { desc = "Add breakpoint at line" })
+vim.keymap.set("n", "<leader>dus", function()
+  local widgets = require "dap.ui.widgets"
+  local sidebar = widgets.sidebar(widgets.scopes)
+  sidebar.open()
+end, { desc = "Open debugging sidebar" })
+
+-- Gopher
+vim.keymap.set("n", "<leader>gsj", "<cmd> GoTagAdd json <CR>", { desc = "Add json struct tags" })
+vim.keymap.set("n", "<leader>gsy", "<cmd> GoTagAdd yaml <CR>", { desc = "Add yaml struct tags" })
+
+-- Go Debugging (dap-go)
+vim.keymap.set("n", "<leader>dgt", function()
+  require("dap-go").debug_test()
+end, { desc = "Debug go test" })
+vim.keymap.set("n", "<leader>dgl", function()
+  require("dap-go").debug_last()
+end, { desc = "Debug last go test" })

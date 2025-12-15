@@ -31,8 +31,12 @@ return {
     config = function()
       local lspconfig = require "lspconfig"
       local util = require "lspconfig/util"
+      local on_attach = require("nvchad.configs.lspconfig").on_attach
+      local capabilities = require("nvchad.configs.lspconfig").capabilities
 
       lspconfig.gopls.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
         cmd = { "gopls" },
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
         root_dir = util.root_pattern("go.work", "go.mod", ".git"),
