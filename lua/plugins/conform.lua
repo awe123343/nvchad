@@ -21,10 +21,6 @@ return {
     -- Rust
     opts.formatters_by_ft["rust"] = { "rustfmt" }
 
-    -- C/C++
-    opts.formatters_by_ft["c"] = { "clang-format" }
-    opts.formatters_by_ft["cpp"] = { "clang-format" }
-
     -- JavaScript / TypeScript / Web
     local js_formatters = { "prettier" }
     opts.formatters_by_ft["javascript"] = js_formatters
@@ -45,7 +41,6 @@ return {
       "golines",
       "ruff",
       "prettier",
-      "clang-format",
     })
 
     opts.lang_maps = opts.lang_maps or {}
