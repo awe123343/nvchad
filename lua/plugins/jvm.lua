@@ -24,17 +24,26 @@ return {
       require("java").setup {}
       require("lspconfig").jdtls.setup {
         on_attach = function(client, bufnr)
+          require("nvchad.configs.lspconfig").on_attach(client, bufnr)
           client.server_capabilities.documentFormattingProvider = false
           client.server_capabilities.documentRangeFormattingProvider = false
         end,
+        capabilities = require("nvchad.configs.lspconfig").capabilities,
         settings = {
           java = {
+            format = {
+              enabled = false,
+            },
             configuration = {
               runtimes = {
                 {
+                  name = "JavaSE-25",
+                  path = "/Library/Java/JavaVirtualMachines/zulu-25.jdk/Contents/Home",
+                  default = true,
+                },
+                {
                   name = "JavaSE-21",
                   path = "/Library/Java/JavaVirtualMachines/zulu-21.jdk/Contents/Home",
-                  default = true,
                 },
                 {
                   name = "JavaSE-17",
