@@ -36,20 +36,22 @@ vim.api.nvim_create_autocmd("FileType", {
 local opt = vim.opt
 
 opt.tabstop = 4
-opt.shiftwidth = 4
-opt.expandtab = true
-opt.softtabstop = 4
+-- opt.shiftwidth = 4
+-- opt.expandtab = true
+-- opt.softtabstop = 4
 
 opt.cmdheight = 0
 opt.relativenumber = true
 
 -- Show whitespace characters (like VSCode)
 opt.list = true
+-- Replace · to • to have more visible whitespace characters
 opt.listchars = {
-  tab = "» ", -- Show tabs with double chevron
-  trail = "·", -- Show trailing spaces with middle dot
-  lead = "·", -- Show leading spaces with middle dot (one per space)
-  nbsp = "␣", -- Show non-breaking spaces
+  -- space = "·", -- Removed: don't show all spaces (would show in middle of words)
+  tab = "  ▸",
+  nbsp = "␣",
+  -- lead = "·",
+  trail = "·",
   extends = "›", -- Character to show when line extends beyond screen
   precedes = "‹", -- Character to show when line precedes screen
 }
