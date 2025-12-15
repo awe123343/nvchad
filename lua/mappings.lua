@@ -60,3 +60,8 @@ end, { desc = "Debug go test" })
 vim.keymap.set("n", "<leader>dgl", function()
   require("dap-go").debug_last()
 end, { desc = "Debug last go test" })
+
+-- Python Debugging (dap-python)
+vim.keymap.set("n", "<leader>dpr", function()
+  require("dap-python").test_method()
+end, { desc = "Debug python test method" })

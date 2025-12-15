@@ -1,10 +1,38 @@
 return {
   {
+    "nvim-neotest/nvim-nio",
+  },
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+    config = function()
+      local dap = require "dap"
+      local dapui = require "dapui"
+
+      dapui.setup()
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
+    end,
+  },
+  {
+    "mfussenegger/nvim-dap",
+  },
+  {
     "mfussenegger/nvim-dap-python",
     ft = "python",
-    dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
-    config = function(_, opts)
-      local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "rcarriga/nvim-dap-ui",
+    },
+    config = function()
+      local path = vim.fn.expand "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
       require("dap-python").setup(path)
     end,
   },
@@ -13,7 +41,7 @@ return {
     dependencies = { "neovim/nvim-lspconfig", "nvim-telescope/telescope.nvim", "mfussenegger/nvim-dap-python" },
     opts = {
       -- stay_on_this_version = true,
-      name = { "snapc_env", ".venv" },
+      name = { ".venv" },
       -- auto_refresh = false
     },
     event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
@@ -29,6 +57,32 @@ return {
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
       vim.list_extend(opts.ensure_installed, { "pyright", "ruff", "ty" })
+    end,
+  },
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "debugpy",
+      },
+    },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      local lspconfig = require "lspconfig"
+      local on_attach = require("nvchad.configs.lspconfig").on_attach
+      local capabilities = require("nvchad.configs.lspconfig").capabilities
+
+      local servers = { "pyright", "ruff", "ty" }
+
+      for _, lsp in ipairs(servers) do
+        lspconfig[lsp].setup {
+          on_attach = on_attach,
+          capabilities = capabilities,
+          filetypes = { "python" },
+        }
+      end
     end,
   },
 }
