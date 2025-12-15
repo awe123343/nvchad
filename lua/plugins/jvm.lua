@@ -1,8 +1,4 @@
 return {
-  -- {
-  --   "mfussenegger/nvim-jdtls",
-  --   ft = { "java", "kt" },
-  -- },
   {
     "nvim-java/nvim-java",
     lazy = false,
@@ -25,9 +21,12 @@ return {
       },
     },
     config = function()
-      -- require("java").setup {}
+      require("java").setup {}
       require("lspconfig").jdtls.setup {
-        -- require("java").setup {
+        on_attach = function(client, bufnr)
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
+        end,
         settings = {
           java = {
             configuration = {
@@ -53,9 +52,16 @@ return {
             },
           },
         },
-        -- on_attach = require("nvchad.configs.lspconfig").on_attach,
-        -- capabilities = require("nvchad.configs.lspconfig").capabilities,
-        filetypes = { "java" },
+        -- Use a simpler root directory detection
+        root_dir = require("lspconfig.util").root_pattern(
+          "settings.gradle",
+          "settings.gradle.kts",
+          "pom.xml",
+          "build.gradle",
+          "mvnw",
+          "gradlew",
+          ".git"
+        ),
       }
     end,
   },

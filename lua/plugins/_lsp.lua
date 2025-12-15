@@ -30,11 +30,11 @@ return {
     },
     opts = function(_, opts)
       opts.skip_config = opts.skip_config or {}
-      vim.list_extend(opts.skip_config, { "kotlin_language_server" })
+      vim.list_extend(opts.skip_config, { "kotlin_lsp", "jdtls" })
 
       opts.ensure_installed = opts.ensure_installed or {}
       opts.automatic_installation = true
-      vim.list_extend(opts.ensure_installed, { "lua_ls", "kotlin_language_server" })
+      vim.list_extend(opts.ensure_installed, { "lua_ls", "kotlin-lsp", "jdtls" })
 
       opts.format_on_save = false -- config format on save none-ls
       opts.virtual_text = false
@@ -52,8 +52,8 @@ return {
 			{ "<leader>lw", "<cmd>Telescope diagnostics<cr>", desc = "Workspace Diagnostics", mode = "n" },
 			{ "<leader>li", "<cmd>LspInfo<cr>", desc = "Info", mode = "n" },
 			{ "<leader>lI", "<cmd>Mason<cr>", desc = "Mason", mode = "n" },
-			{ "<leader>lj", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", desc = "Next Diagnostic", mode = "n" },
-			{ "<leader>lk", "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>", desc = "Prev Diagnostic", mode = "n" },
+			{ "<leader>lj", "<cmd>lua vim.diagnostic.goto_next()<CR>", desc = "Next Diagnostic", mode = "n" },
+			{ "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev()<cr>", desc = "Prev Diagnostic", mode = "n" },
 			{ "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>", desc = "Code Lens Action", mode = "n" },
 			{ "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<cr>", desc = "Quickfix", mode = "n" },
 			{ "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "Rename", mode = "n" },
