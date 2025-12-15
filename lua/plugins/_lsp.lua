@@ -15,9 +15,13 @@ return {
       {
         "williamboman/mason.nvim",
         opts = {
+          registries = {
+            "github:nvim-java/mason-registry", -- nvim-java's registry (spring-boot-tools etc)
+            "github:mason-org/mason-registry", -- default registry
+          },
           ensure_installed = {
-             "kotlin-lsp",
-             "jdtls",
+            "kotlin-lsp",
+            "jdtls",
           },
           ui = {
             icons = {
@@ -34,16 +38,109 @@ return {
     },
     opts = function(_, opts)
       opts.skip_config = opts.skip_config or {}
-      vim.list_extend(opts.skip_config, { "kotlin_lsp", "jdtls" })
+      vim.list_extend(opts.skip_config, { "kotlin_lsp", "jdtls", "vtsls", "gopls" })
 
       opts.ensure_installed = opts.ensure_installed or {}
       opts.automatic_installation = true
-      vim.list_extend(opts.ensure_installed, { "lua_ls", "golangci_lint_ls" })
+      vim.list_extend(opts.ensure_installed, { "lua_ls" })
 
       opts.format_on_save = false -- config format on save none-ls
       opts.virtual_text = false
       opts.timeout_ms = 5000
       return opts
+    end,
+    init = function()
+      -- vtsls config (TypeScript/JavaScript)
+      vim.lsp.config("vtsls", {
+        on_attach = function(client, bufnr)
+          require("nvchad.configs.lspconfig").on_attach(client, bufnr)
+          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+        end,
+        settings = {
+          vtsls = {
+            autoUseWorkspaceTsdk = true,
+            experimental = { completion = { enableServerSideFuzzyMatch = true } },
+          },
+          typescript = {
+            updateImportsOnFileMove = { enabled = "always" },
+            suggest = { completeFunctionCalls = true },
+            inlayHints = {
+              parameterNames = { enabled = "literals" },
+              parameterTypes = { enabled = true },
+              variableTypes = { enabled = false },
+              propertyDeclarationTypes = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+              enumMemberValues = { enabled = true },
+            },
+          },
+          javascript = {
+            updateImportsOnFileMove = { enabled = "always" },
+            inlayHints = {
+              parameterNames = { enabled = "literals" },
+              parameterTypes = { enabled = true },
+              variableTypes = { enabled = false },
+              propertyDeclarationTypes = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+              enumMemberValues = { enabled = true },
+            },
+          },
+        },
+      })
+      vim.lsp.enable "vtsls"
+
+      -- gopls config (Go)
+      vim.lsp.config("gopls", {
+        cmd = { "gopls" },
+        filetypes = { "go", "gomod", "gowork", "gotmpl" },
+        root_markers = { "go.work", "go.mod", ".git" },
+        settings = {
+          gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
+            analyses = { unusedparams = true },
+            staticcheck = true,
+            gofumpt = true,
+          },
+        },
+      })
+      vim.lsp.enable "gopls"
+
+      -- golangci_lint_ls disabled: golangci-lint-langserver not compatible with golangci-lint v2.x
+      -- See: https://github.com/nametake/golangci-lint-langserver/issues
+      -- vim.lsp.config("golangci_lint_ls", {
+      --   filetypes = { "go", "gomod" },
+      --   root_markers = { "go.work", "go.mod", ".git" },
+      --   init_options = {
+      --     command = { "golangci-lint", "run", "--output.json.path", "stdout", "--issues-exit-code=1" },
+      --   },
+      -- })
+      -- vim.lsp.enable "golangci_lint_ls"
+
+      -- kotlin_lsp config
+      vim.lsp.config("kotlin_lsp", {
+        cmd = { "kotlin-lsp" },
+        cmd_env = {
+          JAVA_HOME = "/Library/Java/JavaVirtualMachines/zulu-21.jdk/Contents/Home",
+        },
+        filetypes = { "kotlin" },
+        root_markers = { "settings.gradle", "settings.gradle.kts", "build.xml", "pom.xml", ".git" },
+        on_attach = function(client, bufnr)
+          client.server_capabilities.documentFormattingProvider = false
+        end,
+      })
+      vim.lsp.enable "kotlin_lsp"
+
+      -- Organize imports on save for TS/JS
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = vim.api.nvim_create_augroup("TS_OrganizeImports", { clear = true }),
+        pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
+        callback = function()
+          pcall(vim.lsp.buf.execute_command, {
+            command = "source.organizeImports",
+            arguments = { vim.api.nvim_buf_get_name(0) },
+          })
+        end,
+      })
     end,
     config = function(_, opts)
       require("auto-lsp").setup(opts)
