@@ -8,7 +8,11 @@ return {
   opts = function(_, opts)
     opts.formatters = opts.formatters or {}
     opts.formatters_by_ft = opts.formatters_by_ft or {}
+    opts.formatters_by_ft["go"] = { "gofumpt", "goimports-reviser", "golines" }
+    opts.formatters_by_ft["python"] = { "ruff_format" }
+    opts.formatters_by_ft["lua"] = { "stylua" }
     opts.ensure_installed = opts.ensure_installed or {}
+    vim.list_extend(opts.ensure_installed, { "gofumpt", "goimports-reviser", "golines", "ruff", "stylua" })
     opts.lang_maps = opts.lang_maps or {}
     opts.name_maps = opts.name_maps or {}
     opts.add_new = opts.add_new or {}

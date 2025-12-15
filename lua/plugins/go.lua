@@ -19,4 +19,33 @@ return {
       vim.cmd [[silent! GoInstallDeps]]
     end,
   },
+  {
+    "pojokcodeid/auto-lsp.nvim",
+    opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
+      vim.list_extend(opts.ensure_installed, { "gopls" })
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      local lspconfig = require "lspconfig"
+      local util = require "lspconfig/util"
+
+      lspconfig.gopls.setup {
+        cmd = { "gopls" },
+        filetypes = { "go", "gomod", "gowork", "gotmpl" },
+        root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+        settings = {
+          gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
+            analyses = {
+              unusedparams = true,
+            },
+          },
+        },
+      }
+    end,
+  },
 }
