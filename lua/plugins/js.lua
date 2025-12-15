@@ -11,6 +11,7 @@ return {
     opts = {
       ensure_installed = {
         "js-debug-adapter",
+        "eslint_d",
       },
     },
   },

@@ -15,6 +15,10 @@ return {
       {
         "williamboman/mason.nvim",
         opts = {
+          ensure_installed = {
+             "kotlin-lsp",
+             "jdtls",
+          },
           ui = {
             icons = {
               package_pending = " ",
@@ -34,7 +38,7 @@ return {
 
       opts.ensure_installed = opts.ensure_installed or {}
       opts.automatic_installation = true
-      vim.list_extend(opts.ensure_installed, { "lua_ls", "kotlin-lsp", "jdtls", "golangci_lint_ls" })
+      vim.list_extend(opts.ensure_installed, { "lua_ls", "golangci_lint_ls" })
 
       opts.format_on_save = false -- config format on save none-ls
       opts.virtual_text = false

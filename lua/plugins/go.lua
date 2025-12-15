@@ -26,6 +26,7 @@ return {
         "delve",
         "golangci-lint",
         "golangci-lint-langserver",
+        "gotests",
       },
     },
   },
