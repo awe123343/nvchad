@@ -23,4 +23,14 @@ return {
       vim.list_extend(opts.ensure_installed, { "vtsls", "eslint", "html", "cssls", "jsonls" })
     end,
   },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "tsx",
+        "typescript",
+        "javascript",
+      },
+    },
+  },
 }
