@@ -30,9 +30,12 @@ return {
     },
     opts = function(_, opts)
       opts.skip_config = opts.skip_config or {}
+      vim.list_extend(opts.skip_config, { "kotlin_language_server" })
+
       opts.ensure_installed = opts.ensure_installed or {}
       opts.automatic_installation = true
-      vim.list_extend(opts.ensure_installed, { "lua_ls" })
+      vim.list_extend(opts.ensure_installed, { "lua_ls", "kotlin_language_server" })
+
       opts.format_on_save = false -- config format on save none-ls
       opts.virtual_text = false
       opts.timeout_ms = 5000
