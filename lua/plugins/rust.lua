@@ -20,6 +20,8 @@ return {
           capabilities = capabilities,
         },
         dap = {
+          -- rustaceanvim will automatically find the mason-installed codelldb
+          -- if you need to manually specify it, uncomment and set paths below:
           -- adapter = require("rustaceanvim.config").get_codelldb_adapter(codelldb_path, liblldb_path),
         },
       }
