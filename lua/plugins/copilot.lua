@@ -2,15 +2,18 @@ return {
   {
     "zbirenbaum/copilot.lua",
     event = "InsertEnter",
-    opts = {
-      suggestion = {
-        -- auto_trigger = true,
-        enabled = false,
-      },
-      panel = {
-        enabled = false,
-      },
-    },
+    config = function()
+      require("copilot").setup {}
+    end,
+    -- opts = {
+    --   suggestion = {
+    --     -- auto_trigger = true,
+    --     enabled = false,
+    --   },
+    --   panel = {
+    --     enabled = false,
+    --   },
+    -- },
   },
   {
     "zbirenbaum/copilot-cmp",
