@@ -36,3 +36,14 @@ vim.api.nvim_create_autocmd("FileType", {
 local opt = vim.opt
 opt.cmdheight = 0
 opt.relativenumber = true
+
+-- Show whitespace characters (like VSCode)
+opt.list = true
+opt.listchars = {
+  tab = "» ",          -- Show tabs with double chevron
+  trail = "·",         -- Show trailing spaces with middle dot
+  lead = "·",          -- Show leading spaces with middle dot (one per space)
+  nbsp = "␣",          -- Show non-breaking spaces
+  extends = "›",       -- Character to show when line extends beyond screen
+  precedes = "‹",      -- Character to show when line precedes screen
+}
