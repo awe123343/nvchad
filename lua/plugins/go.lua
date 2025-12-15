@@ -6,7 +6,7 @@ return {
     config = function(_, opts)
       require("dap-go").setup(opts)
       -- require("core.utils").load_mappings("dap_go")
-    end
+    end,
   },
   {
     "olexsmir/gopher.nvim",
@@ -18,6 +18,14 @@ return {
     build = function()
       vim.cmd [[silent! GoInstallDeps]]
     end,
+  },
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "delve",
+      },
+    },
   },
   {
     "pojokcodeid/auto-lsp.nvim",
@@ -47,6 +55,8 @@ return {
             analyses = {
               unusedparams = true,
             },
+            staticcheck = true,
+            gofumpt = true,
           },
         },
       }

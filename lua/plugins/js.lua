@@ -11,12 +11,6 @@ return {
     opts = {
       ensure_installed = {
         "js-debug-adapter",
-        "prettier",
-        "vtsls",
-        "eslint-lsp",
-        "html-lsp",
-        "css-lsp",
-        "json-lsp",
       },
     },
   },
@@ -32,6 +26,7 @@ return {
         group = vim.api.nvim_create_augroup("TS_OrganizeImports", { clear = true }),
         pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
         callback = function()
+          -- vtsls has a different command for organize imports
           pcall(vim.lsp.buf.execute_command, {
             command = "source.organizeImports",
             arguments = { vim.api.nvim_buf_get_name(0) },
@@ -83,24 +78,6 @@ return {
           },
         },
       }
-    end,
-  },
-  {
-    "pojokcodeid/auto-conform.nvim",
-    opts = function(_, opts)
-      opts.formatters_by_ft = opts.formatters_by_ft or {}
-      local js_formatters = { "prettier" }
-      opts.formatters_by_ft["javascript"] = js_formatters
-      opts.formatters_by_ft["typescript"] = js_formatters
-      opts.formatters_by_ft["javascriptreact"] = js_formatters
-      opts.formatters_by_ft["typescriptreact"] = js_formatters
-      opts.formatters_by_ft["json"] = { "prettier" }
-      opts.formatters_by_ft["html"] = { "prettier" }
-      opts.formatters_by_ft["css"] = { "prettier" }
-      opts.formatters_by_ft["scss"] = { "prettier" }
-
-      opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, { "prettier" })
     end,
   },
   {

@@ -8,11 +8,38 @@ return {
   opts = function(_, opts)
     opts.formatters = opts.formatters or {}
     opts.formatters_by_ft = opts.formatters_by_ft or {}
-    opts.formatters_by_ft["go"] = { "gofumpt", "goimports-reviser", "golines" }
-    opts.formatters_by_ft["python"] = { "ruff_format" }
+
+    -- Lua
     opts.formatters_by_ft["lua"] = { "stylua" }
+
+    -- Go
+    opts.formatters_by_ft["go"] = { "gofumpt", "goimports-reviser", "golines" }
+
+    -- Python
+    opts.formatters_by_ft["python"] = { "ruff_format" }
+
+    -- JavaScript / TypeScript / Web
+    local js_formatters = { "prettier" }
+    opts.formatters_by_ft["javascript"] = js_formatters
+    opts.formatters_by_ft["typescript"] = js_formatters
+    opts.formatters_by_ft["javascriptreact"] = js_formatters
+    opts.formatters_by_ft["typescriptreact"] = js_formatters
+    opts.formatters_by_ft["json"] = { "prettier" }
+    opts.formatters_by_ft["html"] = { "prettier" }
+    opts.formatters_by_ft["css"] = { "prettier" }
+    opts.formatters_by_ft["scss"] = { "prettier" }
+
+    -- Ensure Installed
     opts.ensure_installed = opts.ensure_installed or {}
-    vim.list_extend(opts.ensure_installed, { "gofumpt", "goimports-reviser", "golines", "ruff", "stylua" })
+    vim.list_extend(opts.ensure_installed, {
+      "stylua",
+      "gofumpt",
+      "goimports-reviser",
+      "golines",
+      "ruff",
+      "prettier",
+    })
+
     opts.lang_maps = opts.lang_maps or {}
     opts.name_maps = opts.name_maps or {}
     opts.add_new = opts.add_new or {}
