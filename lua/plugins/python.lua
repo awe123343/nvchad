@@ -24,4 +24,20 @@ return {
     --   { '<leader>vc', '<cmd>VenvSelectCached<cr>' },
     -- },
   },
+  {
+    "pojokcodeid/auto-lsp.nvim",
+    opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
+      vim.list_extend(opts.ensure_installed, { "pyright", "ruff", "ty" })
+    end,
+  },
+  {
+    "pojokcodeid/auto-conform.nvim",
+    opts = function(_, opts)
+      opts.formatters_by_ft = opts.formatters_by_ft or {}
+      opts.ensure_installed = opts.ensure_installed or {}
+      vim.list_extend(opts.ensure_installed, { "ruff" })
+      opts.formatters_by_ft.python = { "ruff_format" }
+    end,
+  },
 }
