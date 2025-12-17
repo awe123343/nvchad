@@ -1,12 +1,5 @@
 return {
   {
-    "tpope/vim-fugitive",
-    event = "VeryLazy",
-    dependencies = {
-      "tpope/vim-rhubarb", -- For :GBrowse
-    },
-  },
-  {
     "lewis6991/gitsigns.nvim",
     opts = {
       current_line_blame = true,

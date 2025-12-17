@@ -89,8 +89,10 @@ return {
       local cmp = require "cmp"
       local mapping = {
         ["<CR>"] = cmp.mapping.confirm { select = true },
+        ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
         ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
         ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
+        ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
         ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
         ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
       }
